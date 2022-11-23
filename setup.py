@@ -6,7 +6,7 @@ setuptools.setup(
     author='XuZhen86',
     url='https://github.com/XuZhen86/GoveeH5072Logger',
     packages=setuptools.find_packages(),
-    python_requires='>=3.10',
+    python_requires='>=3.11',
     install_requires=[
         'absl-py>=1.3.0',
         'bleak>=0.19.5',
