@@ -50,7 +50,7 @@ _SQL_SELECT_LAST_TIMESTAMP = '''
   FROM
     ThermometerRecord
   WHERE
-    nick_name = %s
+    nick_name = %(nick_name)s
   ORDER BY
     timestamp_ns DESC
   LIMIT
@@ -84,7 +84,7 @@ async def _get_last_timestamps(thermometers: list[Thermometer]) -> dict[str, int
 
     for thermometer in thermometers:
       nick_name = thermometer.nick_name
-      await cursor.execute(_SQL_SELECT_LAST_TIMESTAMP, (nick_name,))
+      await cursor.execute(_SQL_SELECT_LAST_TIMESTAMP, {'nick_name': nick_name})
       result: tuple[int] | None = await cursor.fetchone()
 
       if result is None:
