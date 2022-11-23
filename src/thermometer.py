@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from absl import flags
+from absl import flags, logging
 
 _THERMOMETERS = flags.DEFINE_multi_string(
     name='thermometers',
@@ -35,4 +35,6 @@ class Thermometer:
 
 
 def thermometers_from_flags() -> list[Thermometer]:
-  return [Thermometer(*flag_str.split(':')) for flag_str in _THERMOMETERS.value]
+  thermometers = [Thermometer(*flag_str.split(':')) for flag_str in _THERMOMETERS.value]
+  logging.info('thermometers = %s', thermometers)
+  return thermometers

@@ -14,6 +14,7 @@ IMAGE=govee-h5072-logger
 
 ARGS=(
   --flagfile=/mnt/flags.txt
+  --verbosity=0
 )
 
 docker run "${OPTIONS[@]}" ${IMAGE} "${ARGS[@]}"

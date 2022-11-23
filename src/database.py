@@ -3,7 +3,7 @@ from dataclasses import asdict
 from queue import Empty, Queue
 
 import aiomysql
-from absl import flags
+from absl import flags, logging
 
 import src.thermometer as thermometer
 import src.thermometerrecord as thermometerrecord
@@ -92,6 +92,7 @@ async def _get_last_timestamps(thermometers: list[Thermometer]) -> dict[str, int
       else:
         last_timestamps[nick_name] = result[0]
 
+    logging.debug('last_timestamps = %s', last_timestamps)
     return last_timestamps
 
 
@@ -107,6 +108,9 @@ async def insert_records(record_queue: Queue[ThermometerRecord],
       try:
         record = record_queue.get(block=False)
       except Empty:
+        logging.debug('len(pending_records) = %s', len(pending_records))
+        logging.debug('pending_records = %s', pending_records)
+
         await cursor.executemany(thermometerrecord.SQL_INSERT, [asdict(r) for r in pending_records])
         await connection.commit()
         pending_records.clear()

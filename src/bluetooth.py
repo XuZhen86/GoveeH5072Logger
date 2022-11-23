@@ -3,6 +3,7 @@ import time
 from decimal import Decimal
 from queue import Queue
 
+from absl import logging
 from bleak import BleakScanner
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
@@ -26,6 +27,7 @@ def detection_callback(
   if nick_name is None:
     return
 
+  logging.debug('advertisement_data = %s', advertisement_data)
   manufacturer_data = advertisement_data.manufacturer_data
   byte_data = list(manufacturer_data.values())[0]
 
