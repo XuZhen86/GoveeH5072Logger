@@ -11,7 +11,7 @@ from src.thermometerrecord import ThermometerRecord
 
 async def main(_: list[str]) -> None:
   thermometers = thermometers_from_flags()
-  init_database(thermometers)
+  await init_database(thermometers)
 
   record_queue: Queue[ThermometerRecord] = Queue()
   tasks = [

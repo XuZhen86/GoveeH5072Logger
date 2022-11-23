@@ -9,8 +9,8 @@ setuptools.setup(
     python_requires='>=3.11',
     install_requires=[
         'absl-py>=1.3.0',
+        'aiomysql>=0.1.1',
         'bleak>=0.19.5',
-        'pymysql>=1.0.2',
     ],
     entry_points={
         'console_scripts': ['govee-h5072-logger = src.main:app_run_govee_h5072_logger',],
