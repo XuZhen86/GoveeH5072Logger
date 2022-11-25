@@ -8,8 +8,8 @@ from bleak import BleakScanner
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
 
-from src.thermometer import Thermometer
-from src.thermometerrecord import ThermometerRecord
+from govee_h5072_logger.thermometer import Thermometer
+from govee_h5072_logger.thermometerrecord import ThermometerRecord
 
 
 def detection_callback(

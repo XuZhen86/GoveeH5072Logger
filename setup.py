@@ -13,6 +13,6 @@ setuptools.setup(
         'bleak>=0.19.5',
     ],
     entry_points={
-        'console_scripts': ['govee-h5072-logger = src.main:app_run_govee_h5072_logger',],
+        'console_scripts': ['govee-h5072-logger = govee_h5072_logger.main:app_run_main',],
     },
 )

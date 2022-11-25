@@ -5,10 +5,10 @@ from queue import Empty, Queue
 import aiomysql
 from absl import flags, logging
 
-import src.thermometer as thermometer
-import src.thermometerrecord as thermometerrecord
-from src.thermometer import Thermometer
-from src.thermometerrecord import ThermometerRecord
+import govee_h5072_logger.thermometer as thermometer
+import govee_h5072_logger.thermometerrecord as thermometerrecord
+from govee_h5072_logger.thermometer import Thermometer
+from govee_h5072_logger.thermometerrecord import ThermometerRecord
 
 _SQL_USER = flags.DEFINE_string(
     name='sql_user',

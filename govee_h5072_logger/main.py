@@ -4,10 +4,10 @@ from queue import Queue
 
 from absl import app, logging
 
-from src.bluetooth import scan_devices
-from src.database import init_database, insert_records
-from src.thermometer import thermometers_from_flags
-from src.thermometerrecord import ThermometerRecord
+from govee_h5072_logger.bluetooth import scan_devices
+from govee_h5072_logger.database import init_database, insert_records
+from govee_h5072_logger.thermometer import thermometers_from_flags
+from govee_h5072_logger.thermometerrecord import ThermometerRecord
 
 
 async def main(_: list[str]) -> None:
@@ -41,9 +41,9 @@ async def main(_: list[str]) -> None:
   await asyncio.wait(pending_tasks, return_when=asyncio.ALL_COMPLETED)
 
 
-def app_run_govee_h5072_logger():
+def app_run_main():
   app.run(lambda args: asyncio.run(main(args), debug=True))
 
 
 if __name__ == '__main__':
-  app_run_govee_h5072_logger()
+  app_run_main()
