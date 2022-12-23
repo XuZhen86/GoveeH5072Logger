@@ -1,7 +1,5 @@
-FROM python:3.11-alpine
+FROM python:3.11
 
 WORKDIR /app
 ADD . /app
 RUN pip3 install .
-
-ENTRYPOINT ["govee-h5072-logger"]

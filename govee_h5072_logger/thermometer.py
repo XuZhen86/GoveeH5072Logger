@@ -12,21 +12,6 @@ _THERMOMETERS = flags.DEFINE_multi_string(
     ' --thermometers=GVH5072_34CD:Kitchen.',
 )
 
-SQL_CREATE_TABLE = '''
-  CREATE
-  OR REPLACE TABLE Thermometers (
-    device_name  TINYTEXT  NOT NULL,
-    nick_name    TINYTEXT  NOT NULL
-  );
-'''
-
-SQL_INSERT = '''
-  INSERT INTO
-    Thermometers (device_name, nick_name)
-  VALUES
-    (%(device_name)s, %(nick_name)s);
-'''
-
 
 @dataclass
 class Thermometer:
@@ -34,7 +19,8 @@ class Thermometer:
   nick_name: str
 
 
-def thermometers_from_flags() -> list[Thermometer]:
-  thermometers = [Thermometer(*flag_str.split(':')) for flag_str in _THERMOMETERS.value]
+def thermometers_from_flags() -> dict[str, Thermometer]:
+  thermometer_list = [Thermometer(*flag_str.split(':')) for flag_str in _THERMOMETERS.value]
+  thermometers = {t.device_name: t for t in thermometer_list}
   logging.info('thermometers = %s', thermometers)
   return thermometers

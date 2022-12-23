@@ -1,5 +1,6 @@
 *.egg-info
 __pycache__
 build
-flags.txt
-one-offs
+data
+influxdb/mysql-to-influxdb/flags.txt
+profile

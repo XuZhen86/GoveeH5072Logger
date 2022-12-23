@@ -9,10 +9,14 @@ setuptools.setup(
     python_requires='>=3.11',
     install_requires=[
         'absl-py>=1.3.0',
-        'aiomysql>=0.1.1',
+        'aiosqlite>=0.18.0',
         'bleak>=0.19.5',
+        'influxdb-client[async]>=1.35.0',
     ],
     entry_points={
-        'console_scripts': ['govee-h5072-logger = govee_h5072_logger.main:app_run_main',],
+        'console_scripts': [
+            'govee-h5072-logger-collect-records = govee_h5072_logger.collectrecords:cprofile_main',
+            'govee-h5072-logger-write-records-to-influxdb = govee_h5072_logger.writerecrdstoinfluxdb:cprofile_main',
+        ],
     },
 )
