@@ -1,8 +1,8 @@
 install:
-	pip3 install .
+	pip3 install --use-pep517 .
 
 install-dev:
-	pip3 install --editable .
+	pip3 install --use-pep517 --editable .
 
 uninstall:
 	pip3 uninstall --yes govee-h5072-logger

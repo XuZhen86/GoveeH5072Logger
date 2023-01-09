@@ -1,9 +1,6 @@
-import json
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Self
 
-from absl import logging
 from influxdb_client import Point
 from influxdb_client.domain.write_precision import WritePrecision
 
@@ -48,38 +45,5 @@ class ThermometerRecord:
     ]
     # yapf: enable
 
-  def to_json_str(self) -> str:
-    json_dict: dict[str, str | int] = {
-        'timestamp_ns': self.timestamp_ns,
-        'device_name': self.device_name,
-        'nick_name': self.nick_name,
-        'temperature_c_10x': int(self.temperature_c * 10),
-        'humidity_percent_10x': int(self.humidity_percent * 10),
-        'battery_percent': self.battery_percent,
-        'rssi': self.rssi,
-    }
-    return json.dumps(json_dict, separators=(',', ':'))
-
-  @classmethod
-  def from_json_str(cls, json_str: str) -> Self | None:
-    try:
-      if (isinstance(json_dict := json.loads(json_str), dict)
-          and isinstance(timestamp_ns := json_dict['timestamp_ns'], int)
-          and isinstance(device_name := json_dict['device_name'], str)
-          and isinstance(nick_name := json_dict['nick_name'], str)
-          and isinstance(temperature_c_10x := json_dict['temperature_c_10x'], int)
-          and isinstance(humidity_percent_10x := json_dict['humidity_percent_10x'], int)
-          and isinstance(battery_percent := json_dict['battery_percent'], int)
-          and isinstance(rssi := json_dict['rssi'], int)):
-        return cls(
-            timestamp_ns,
-            device_name,
-            nick_name,
-            Decimal(temperature_c_10x) / 10,
-            Decimal(humidity_percent_10x) / 10,
-            battery_percent,
-            rssi,
-        )
-    except:
-      logging.error('Cannot convert json string "%s" to ThermometerRecord.', json_str)
-      return None
+  def to_influxdb_line_protocols(self) -> list[str]:
+    return [point.to_line_protocol() for point in self.to_influxdb_points()]
