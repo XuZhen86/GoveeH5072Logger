@@ -6,6 +6,7 @@ OPTIONS=(
   --mount type=bind,src=/var/run/dbus,dst=/var/run/dbus
   --mount type=volume,src=govee-h5072-logger-data,dst=/app/data
   --name govee-h5072-logger-collect-records
+  --network none
   --privileged
   --restart unless-stopped
 )

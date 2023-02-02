@@ -5,6 +5,11 @@ OPTIONS=(
   --init
   --mount type=volume,src=govee-h5072-logger-data,dst=/app/data
   --name govee-h5072-logger-write-records-to-influxdb
+
+  # Needed for solving an issue where placing InfluxDB behind a reverse proxy causes
+  # "dial tcp 192.168.1.2:8086: connect: network is unreachable".
+  --network host
+
   --restart unless-stopped
 )
 

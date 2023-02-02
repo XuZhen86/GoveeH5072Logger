@@ -50,14 +50,15 @@ async def _produce_line_protocols(thermometers: dict[str, Thermometer]) -> None:
 
   async with AsyncLineProtocolCacheProducer() as producer, BleakScanner(
       lambda d, a: _detection_callback(d, a, record_queue, thermometers)):
+    line_protocols: list[str] = []
     while True:
       try:
-        record = record_queue.get(block=False)
+        line_protocols += record_queue.get(block=False).to_influxdb_line_protocols()
       except Empty:
-        await asyncio.sleep(1)
+        await producer.put(line_protocols)
+        line_protocols.clear()
+        await asyncio.sleep(2)
         continue
-
-      await producer.put(record.to_influxdb_line_protocols())
 
 
 def _detection_callback(

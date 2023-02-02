@@ -23,25 +23,25 @@ class ThermometerRecord:
             .tag('nick_name', self.nick_name)
             .tag('device_name', self.device_name)
             .field('temperature_c_10x', int(self.temperature_c * 10))
-            .time(self.timestamp_ns, write_precision=WritePrecision.NS),
+            .time(self.timestamp_ns, write_precision=WritePrecision.NS),  # type: ignore
         Point
             .measurement('humidity')
             .tag('nick_name', self.nick_name)
             .tag('device_name', self.device_name)
             .field('humidity_percent_10x', int(self.humidity_percent * 10))
-            .time(self.timestamp_ns, write_precision=WritePrecision.NS),
+            .time(self.timestamp_ns, write_precision=WritePrecision.NS),  # type: ignore
         Point
             .measurement('battery')
             .tag('nick_name', self.nick_name)
             .tag('device_name',self.device_name)
             .field('battery_percent', self.battery_percent)
-            .time(self.timestamp_ns, write_precision=WritePrecision.NS),
+            .time(self.timestamp_ns, write_precision=WritePrecision.NS),  # type: ignore
         Point
             .measurement('signal')
             .tag('nick_name', self.nick_name)
             .tag('device_name', self.device_name)
             .field('rssi', self.rssi)
-            .time(self.timestamp_ns, write_precision=WritePrecision.NS),
+            .time(self.timestamp_ns, write_precision=WritePrecision.NS),  # type: ignore
     ]
     # yapf: enable
 

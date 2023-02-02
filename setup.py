@@ -11,7 +11,7 @@ setuptools.setup(
         'absl-py>=1.3.0',
         'bleak>=0.19.5',
         'influxdb-client>=1.35.0',
-        'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache',
+        'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache@26ade43329fd143fd2311926620e5a01082be1e1',
     ],
     entry_points={
         'console_scripts': [
