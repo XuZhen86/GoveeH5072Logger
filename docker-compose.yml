@@ -1,0 +1,29 @@
+services:
+  collect-records:
+    command:
+      - govee-h5072-logger-collect-records
+      - '--flagfile=data/collect-records-flags.txt'
+    image: govee-h5072-logger
+    network_mode: none
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime,ro
+      - /var/run/dbus:/var/run/dbus
+      - data:/app/data
+  write-records-to-influxdb:
+    command:
+      - line-protocol-cache-consumer
+      - '--flagfile=data/line-protocol-cache-consumer-flags.txt'
+    image: govee-h5072-logger
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime,ro
+      - data:/app/data
+
+# docker-compose version 1.17.1 on Jetson Nano.
+# https://docs.docker.com/compose/compose-file/compose-versioning/#version-23
+version: '2.3'
+
+volumes:
+  data: null
