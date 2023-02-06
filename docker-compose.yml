@@ -8,7 +8,6 @@ services:
     privileged: true
     restart: unless-stopped
     volumes:
-      - /etc/localtime:/etc/localtime,ro
       - /var/run/dbus:/var/run/dbus
       - data:/app/data
 
@@ -20,7 +19,6 @@ services:
     network_mode: host  # Router has trouble forwarding IPv4 traffic. This allows it to use IPv6.
     restart: unless-stopped
     volumes:
-      - /etc/localtime:/etc/localtime,ro
       - data:/app/data
 
 # docker-compose version 1.17.1 on Jetson Nano.
