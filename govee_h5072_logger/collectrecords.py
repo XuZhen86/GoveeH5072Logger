@@ -1,5 +1,4 @@
 import asyncio
-import signal
 import time
 from decimal import Decimal
 from queue import Empty, Queue
@@ -15,37 +14,11 @@ from govee_h5072_logger.thermometerrecord import ThermometerRecord
 
 
 def main() -> None:
-  app.run(lambda args: asyncio.run(_collect_records(args), debug=True))
+  app.run(lambda args: asyncio.run(_produce_line_protocols(args), debug=True))
 
 
-async def _collect_records(_: list[str]) -> None:
+async def _produce_line_protocols(args: list[str]) -> None:
   thermometers = thermometers_from_flags()
-
-  sigterm_event = asyncio.Event()
-  asyncio.get_running_loop().add_signal_handler(signal.SIGTERM, sigterm_event.set)
-  tasks = [
-      asyncio.create_task(sigterm_event.wait(), name='sigterm_event.wait()'),
-      asyncio.create_task(_produce_line_protocols(thermometers), name='produce_line_protocols()'),
-  ]
-
-  try:
-    completed_tasks, pending_tasks = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-  except asyncio.CancelledError:
-    # Handles SIGINT. Exiting normally instead of propagating CancelledError.
-    # https://docs.python.org/3/library/asyncio-task.html#task-cancellation
-    # https://docs.python.org/3/library/asyncio-runner.html#handling-keyboard-interruption
-    completed_tasks = []
-    pending_tasks = tasks
-
-  logging.warn('completed_tasks = %s', completed_tasks)
-  logging.info('pending_tasks = %s', pending_tasks)
-
-  for task in pending_tasks:
-    task.cancel()
-  await asyncio.wait(pending_tasks, return_when=asyncio.ALL_COMPLETED)
-
-
-async def _produce_line_protocols(thermometers: dict[str, Thermometer]) -> None:
   record_queue: Queue[ThermometerRecord] = Queue()
 
   async with AsyncLineProtocolCacheProducer() as producer, BleakScanner(
