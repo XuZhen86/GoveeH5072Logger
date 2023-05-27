@@ -11,4 +11,4 @@ clean:
 	rm -rf *.egg-info build
 
 docker-image:
-	docker build -t govee-h5072-logger .
+	docker build --pull --no-cache --tag govee-h5072-logger .

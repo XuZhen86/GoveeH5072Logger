@@ -16,7 +16,6 @@ services:
       - line-protocol-cache-consumer
       - --flagfile=data/line-protocol-cache-consumer-flags.txt
     image: govee-h5072-logger
-    network_mode: host  # Router has trouble forwarding IPv4 traffic. This allows it to use IPv6.
     restart: unless-stopped
     volumes:
       - data:/app/data
