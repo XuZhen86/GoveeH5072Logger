@@ -7,6 +7,9 @@ install-dev:
 uninstall:
 	pip3 uninstall --yes govee-h5072-logger
 
+unit-test:
+	python3 -X dev -X tracemalloc -m unittest discover
+
 clean:
 	rm -rf *.egg-info build
 

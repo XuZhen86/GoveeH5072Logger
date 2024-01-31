@@ -1,6 +1,5 @@
 *.egg-info
-.DS_Store
 __pycache__
-data
-grafana
-influxdb/mysql-to-influxdb/flags.txt
+/data
+/grafana
+/influxdb
