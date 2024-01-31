@@ -1,4 +1,5 @@
 import asyncio
+import signal
 
 from absl import app, logging
 from bleak import BleakScanner
@@ -33,7 +34,12 @@ def detection_callback(device: BLEDevice, advertisement_data: AdvertisementData)
 
 async def main(args: list[str]) -> None:
   async with LineProtocolCache(), BleakScanner(detection_callback):
-    await asyncio.Event().wait()  # Sleep forever.
+    # Signal handlers must be set in the main thread of the main interprer.
+    # Asyncio should be running this in the main thread.
+    stop_running = asyncio.Event()
+    signal.signal(signal.SIGTERM, lambda signal_number, stack_frame: stop_running.set())
+
+    await stop_running.wait()
 
 
 def app_run_main() -> None:
