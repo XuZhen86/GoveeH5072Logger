@@ -14,6 +14,6 @@ setuptools.setup(
         'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache@8a3db1d',
     ],
     entry_points={
-        'console_scripts': ['govee-h5072-logger = govee_h5072_logger.main:main'],
+        'console_scripts': ['govee-h5072-logger = govee_h5072_logger.main:app_run_main'],
     },
 )
