@@ -65,7 +65,7 @@ class DataPoint:
 
     rssi = self._point_with_common_tags()
     rssi.tag('scale_factor', 1).tag('unit', 'dBm')
-    rssi.field('battery', self.rssi)
+    rssi.field('rssi', self.rssi)
     rssi.time(time_ns)  # type: ignore
     points.append(rssi)
 

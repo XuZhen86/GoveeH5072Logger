@@ -37,7 +37,7 @@ class TestDataPoint(absltest.TestCase):
         'thermometer,device_name=d,model=H5072,nick_name=n,scale_factor=10,unit=°C temperature=-241i 69420',
         'thermometer,device_name=d,model=H5072,nick_name=n,scale_factor=10,unit=%RH humidity=357i 69420',
         'thermometer,device_name=d,model=H5072,nick_name=n,scale_factor=1,unit=% battery=57i 69420',
-        'thermometer,device_name=d,model=H5072,nick_name=n,scale_factor=1,unit=dBm battery=-75i 69420',
+        'thermometer,device_name=d,model=H5072,nick_name=n,scale_factor=1,unit=dBm rssi=-75i 69420',
     ])
 
   def test_h5072_100Humidity(self):
@@ -73,5 +73,5 @@ class TestDataPoint(absltest.TestCase):
     self.assertListEqual([p.to_line_protocol() for p in points], [
         'thermometer,device_name=d,model=H5105,nick_name=n,scale_factor=10,unit=°C temperature=-241i 69420',
         'thermometer,device_name=d,model=H5105,nick_name=n,scale_factor=10,unit=%RH humidity=357i 69420',
-        'thermometer,device_name=d,model=H5105,nick_name=n,scale_factor=1,unit=dBm battery=-75i 69420',
+        'thermometer,device_name=d,model=H5105,nick_name=n,scale_factor=1,unit=dBm rssi=-75i 69420',
     ])
