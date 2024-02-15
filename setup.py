@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'absl-py==2.1.0',
         'bleak==0.20.2',
+        'dbus-fast==1.83.0',
         'influxdb-client==1.39.0',
         'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache@01ad59c',
     ],
