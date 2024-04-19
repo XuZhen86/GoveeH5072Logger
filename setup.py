@@ -12,7 +12,7 @@ setuptools.setup(
         'bleak==0.20.2',
         'dbus-fast==1.83.0',
         'influxdb-client==1.39.0',
-        'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache@01ad59c',
+        'line_protocol_cache@git+https://github.com/XuZhen86/LineProtocolCache@c92e513',
     ],
     entry_points={
         'console_scripts': ['govee-h5072-logger = govee_h5072_logger.main:app_run_main'],
