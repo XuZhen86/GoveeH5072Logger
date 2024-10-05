@@ -6,7 +6,14 @@ DEVICE_NAMES = flags.DEFINE_multi_string(
     name='device_names',
     default=None,
     required=True,
-    help='Thermometer Bluetooth device names for each thermometer. E.g. "GVH5072_7705".',
+    help='Bluetooth device names for each thermometer. E.g. "GVH5072_7705".',
+)
+
+DEVICE_MACS = flags.DEFINE_multi_string(
+    name='device_macs',
+    default=None,
+    required=True,
+    help='Bluetooth device MAC address for each thermometer. E.g. "01:23:45:67:89:AB".',
 )
 
 NICK_NAMES = flags.DEFINE_multi_string(

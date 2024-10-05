@@ -98,8 +98,4 @@ class DataPoint:
     temperature_c = Decimal((encoded_data // 1000) * (-1 if is_negative else 1)) / 10
     humidity_percent = Decimal(encoded_data % 1000) / 10
 
-    if temperature_c == 0 and humidity_percent == 0:
-      raise ValueError('Ignoring invalid temperature humidity because both values equal 0. '
-                       'This happens for the first data point after boot.')
-
     return (temperature_c, humidity_percent)

@@ -10,8 +10,8 @@ from govee_h5072_logger.thermometer import Thermometer
 
 
 class TestDataPoint(absltest.TestCase):
-  H5072 = Thermometer('d', 'n', Model.H5072)
-  H5105 = Thermometer('d', 'n', Model.H5105)
+  H5072 = Thermometer('d', '00:00:00:00:50:72', 'n', Model.H5072)
+  H5105 = Thermometer('d', '00:00:00:00:51:05', 'n', Model.H5105)
   BATTERY_PERCENT = 57
   RSSI = -75
 
@@ -61,10 +61,6 @@ class TestDataPoint(absltest.TestCase):
   def test_h5105_humidity100(self):
     with self.assertRaises(ValueError):
       DataPoint.build(self.H5105, bytes.fromhex('0101ffffff'), self.RSSI)
-
-  def test_h5105_temperature0Humidity0(self):
-    with self.assertRaises(ValueError):
-      DataPoint.build(self.H5105, bytes.fromhex('0101000000'), self.RSSI)
 
   @patch.object(time, 'time_ns', Mock(return_value=69420))
   def test_h5105_toPoints(self):

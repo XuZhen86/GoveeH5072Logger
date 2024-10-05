@@ -12,21 +12,31 @@ from govee_h5072_logger.thermometer import get_thermometer
 
 
 def detection_callback(device: BLEDevice, advertisement_data: AdvertisementData) -> None:
-  if (device_name := device.name) is None:
+  if (device_mac := device.address) is None:
     return
   try:
-    thermometer = get_thermometer(device_name)
+    thermometer = get_thermometer(device_mac)
   except ValueError:
     return
 
   manufacturer_data = advertisement_data.manufacturer_data
-  byte_data = list(manufacturer_data.values())[0]
+
+  try:
+    byte_data = list(manufacturer_data.values())[0]
+  except IndexError as e:
+    e.add_note(f'{list(manufacturer_data.values())=}')
+    logging.exception('Error when extracting byte_data.')
+    return
+
   rssi = advertisement_data.rssi
 
   try:
     points = DataPoint.build(thermometer, byte_data, rssi).to_points()
   except ValueError as e:
-    logging.warning(repr(e))
+    e.add_note(f'{thermometer=}')
+    e.add_note(f'{byte_data=}')
+    e.add_note(f'{rssi=}')
+    logging.exception('Error when building data point.')
     return
 
   LineProtocolCache.put(points)
