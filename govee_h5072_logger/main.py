@@ -1,7 +1,7 @@
 import asyncio
 import signal
 
-from absl import app, logging
+from absl import app, flags, logging
 from bleak import BleakScanner
 from bleak.backends.device import BLEDevice
 from bleak.backends.scanner import AdvertisementData
@@ -9,6 +9,12 @@ from line_protocol_cache.lineprotocolcache import LineProtocolCache
 
 from govee_h5072_logger.datapoint import DataPoint
 from govee_h5072_logger.thermometer import get_thermometer
+
+_RUN_BLUEZ = flags.DEFINE_bool(
+    name='run_bluez',
+    default=False,
+    help='Run dbus and bluetoothd inside of the container.',
+)
 
 
 def detection_callback(device: BLEDevice, advertisement_data: AdvertisementData) -> None:
@@ -43,6 +49,13 @@ def detection_callback(device: BLEDevice, advertisement_data: AdvertisementData)
 
 
 async def main(args: list[str]) -> None:
+  if _RUN_BLUEZ.value:
+    async with asyncio.timeout(5):
+      dbus = await asyncio.create_subprocess_shell('service dbus start')
+      await dbus.communicate()
+      bluez = await asyncio.create_subprocess_shell('/usr/sbin/bluetoothd &')
+      await bluez.communicate()
+
   async with LineProtocolCache(), BleakScanner(detection_callback):
     # Signal handlers must be set in the main thread of the main interprer.
     # Asyncio should be running this in the main thread.

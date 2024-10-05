@@ -4,11 +4,11 @@ services:
       - govee-h5072-logger
       - --flagfile=data/logger-flags.txt
     image: govee-h5072-logger
-    network_mode: none
+    network_mode: host
     privileged: true
     restart: unless-stopped
     volumes:
-      - /var/run/dbus:/var/run/dbus
+      # - /var/run/dbus:/var/run/dbus
       - prod-data:/app/data
 
   uploader:
